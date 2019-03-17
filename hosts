@@ -1,0 +1,16 @@
+[frontend]
+winepak.org
+dl.winepak.org
+build.winepak.org buildbot=true
+
+[website]
+winepak.org source=https://github.com/winepak/winepak.github.io.git
+
+[buildbot-master]
+build.winepak.org # config=https://github.com/winepak/buildbot-config.git
+
+[buildbot-worker]
+worker-x86-1.winepak.org
+
+# [linux-store-frontend]
+# apps.winepak.org

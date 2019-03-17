@@ -1,0 +1,11 @@
+---
+- name: restart buildbot-worker
+  service:
+    name: buildbot-worker
+    state: restarted
+
+- name: reload firewalld
+  service:
+    name: firewalld
+    enabled: yes
+    state: reloaded

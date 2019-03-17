@@ -1,0 +1,25 @@
+---
+nginx_user: "{{ (ansible_os_family|lower == 'debian') | ternary('www-data', 'nginx') }}"
+nginx_group: "{{ (ansible_os_family|lower == 'debian') | ternary('www-data', 'nginx') }}"
+nginx_www_dir: /var/www
+nginx_cache_dir: /var/cache/httpd
+nginx_resolver: 8.8.8.8
+nginx_webroot_domain: "{{ frontend_webroot_domain }}"
+nginx_webroot_origin: "https://{{ frontend_webroot_domain }}"
+
+frontend_domain_make: true
+frontend_domain_name: "{{ inventory_hostname }}"
+frontend_domain_sign: false
+frontend_domain_path: "{{ nginx_www_dir }}/{{ inventory_hostname }}"
+
+# The current hostname is the current domain to run operations on
+frontend_domain:
+    make: "{{ hostvars[inventory_hostname].make | default(frontend_domain_make) }}"
+    name: "{{ hostvars[inventory_hostname].name | default(frontend_domain_name) }}"
+    path: "{{ hostvars[inventory_hostname].path | default(frontend_domain_path) }}"
+    sign: "{{ hostvars[inventory_hostname].sign | default(frontend_domain_sign) }}"
+    buildbot: "{{ hostvars[inventory_hostname].buildbot | default(false) }}"
+
+frontend_certbot_email_address: "admin@{{ frontend_webroot_domain }}"
+
+frontend_certbot_domains: "{{ frontend_domains_to_sign | default(groups['frontend']) }}"

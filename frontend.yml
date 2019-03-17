@@ -1,0 +1,6 @@
+---
+- name: setup frontend and all domains
+  hosts: frontend
+  become: true
+  roles:
+    - frontend

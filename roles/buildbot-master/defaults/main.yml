@@ -1,0 +1,29 @@
+---
+buildbot_master_user: "buildbot"
+buildbot_master_group: "buildbot"
+buildbot_master_home: "/srv/buildbot"
+buildbot_master_dir: "{{ buildbot_master_home }}/master"
+buildbot_master_sandbox: "{{ buildbot_master_home }}/sandbox"
+buildbot_master_name: "{{ ansible_hostname }}"
+
+buildbot_master_title: "buildbot"
+buildbot_master_title_url: "{{ inventory_hostname }}"
+buildbot_master_url: "{{ inventory_hostname }}"
+
+buildbot_master_auth_admin_username: "admin"
+buildbot_master_auth_admin_password: 
+buildbot_master_github_api_token: 
+buildbot_master_github_auth_client: 
+buildbot_master_github_auth_secret: 
+buildbot_master_github_change_secret: 
+buildbot_master_github_organization_name: 
+
+buildbot_master_gitlab_change_secret: 
+
+buildbot_master_repo_dep_repo: "flathub"
+buildbot_master_repo_dep_repo_url: "https://dl.flathub.org/repo/flathub.flatpakrepo"
+
+buildbot_master_repo_gpg_homedir: "{{ buildbot_master_home }}/gpg"
+buildbot_master_repo_gpg_key: 
+
+buildbot_master_repo_config_file: "config.json"

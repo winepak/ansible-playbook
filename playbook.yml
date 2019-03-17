@@ -1,0 +1,30 @@
+---
+- name: setup all servers with base configuration
+  hosts: all
+  become: true
+  roles:
+    - base
+
+- name: setup frontend and all domains
+  hosts: frontend
+  become: true
+  roles:
+    - frontend
+
+- name: setup website
+  hosts: website
+  become: true
+  roles:
+    - website
+
+- name: setup buildbot master
+  hosts: buildbot
+  become: true
+  roles:
+    - buildbot-master
+  
+- name: setup buildbot workers
+  hosts: buildbot-worker
+  become: true
+  roles:
+    - buildbot-worker

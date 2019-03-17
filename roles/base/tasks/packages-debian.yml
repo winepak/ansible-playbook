@@ -1,0 +1,34 @@
+- name: upgrade all packages
+  apt:
+    name: '*'
+    state: latest
+  tags:
+    - base
+    - update
+
+- name: install packages
+  package:
+    name: "{{ item }}"
+  with_items:
+    - htop
+    - iftop
+    - iotop
+    - lsof
+    - ntp
+    - sed
+    - grep
+    - mktemp
+    - vi
+    - vim
+    - curl
+    - aptitude
+    - host
+    - fail2ban
+    - python3-libsemanage
+    - python-libsemanage
+    - policycoreutils-python-utils
+    - netcat
+    - net-tools
+    - git
+  tags:
+    - base

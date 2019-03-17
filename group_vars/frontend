@@ -1,0 +1,17 @@
+---
+# Root domain that the service will be based off
+# root server (winepak.org) will be setup and then domains will be added
+# - winepak.org
+# - dl.winepak.org
+# - buildbot.winepak.org
+# - etc..
+frontend_webroot_domain: cyberia.party
+
+# Should the frontend make domain configuration by default?
+frontend_domain_make: true
+
+# Should the frontend sign domain configuration by default?
+frontend_domain_sign: true
+
+# Certbot email address to sign domains
+frontend_certbot_email_address: julian@richen.io

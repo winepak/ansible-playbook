@@ -1,0 +1,8 @@
+[Unit]
+Description=Certbot Renewal
+
+[Service]
+ExecStart=/usr/bin/certbot renew --post-hook "systemctl restart nginx"
+
+[Install]
+WantedBy=multi-user.target

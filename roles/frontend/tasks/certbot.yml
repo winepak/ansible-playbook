@@ -1,0 +1,27 @@
+---
+- name: install certbot packages
+  include: 'certbot-packages-{{ ansible_distribution|lower }}.yml'
+  tags:
+    - certbot
+
+- name: install cerbot-renewal.service
+  copy:
+    src: systemd-system-cerbot-renewal.service
+    dest: /etc/systemd/system/cerbot-renewal.service
+  tags:
+    - certbot
+
+- name: install cerbot-renewal.timer
+  copy:
+    src: systemd-system-cerbot-renewal.timer
+    dest: /etc/systemd/system/cerbot-renewal.timer
+  tags:
+    - certbot
+
+- name: enable and start cerbot-renewal.timer
+  service:
+    name: cerbot-renewal.timer
+    enabled: yes
+    state: started
+  tags:
+    - certbot

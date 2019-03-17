@@ -1,0 +1,6 @@
+---
+frontend_domain_path: "/var/www/{{ inventory_hostname }}"
+
+website:
+    source: "{{ hostvars[inventory_hostname].source }}"
+    destination: "{{ hostvars[inventory_hostname].destination | default(frontend_domain_path) }}"

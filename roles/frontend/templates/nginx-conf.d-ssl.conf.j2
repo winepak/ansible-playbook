@@ -1,0 +1,23 @@
+# {{ ansible_managed }}
+
+server {
+    listen      443 ssl http2;
+    listen      [::]:443 ssl http2;
+    server_name {{ frontend_domain.name }} www.{{ frontend_domain.name }};
+    root        {{ frontend_domain.path }};
+
+    location ~ /\.git {
+        deny all;
+    }
+
+    # Load configuration files for the default server block.
+    include /etc/nginx/default.d/{{ frontend_domain.name }}-*.conf;
+
+    ssl on;
+    ssl_certificate /etc/letsencrypt/live/{{ frontend_domain.name }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ frontend_domain.name }}/privkey.pem;
+
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+}

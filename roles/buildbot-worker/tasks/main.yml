@@ -1,0 +1,141 @@
+---
+- name: install packages
+  include: 'packages-{{ ansible_distribution|lower }}.yml'
+  tags:
+    - buildbot
+    - buildbot-worker
+
+- name: create buildbot group
+  group:
+    name: "{{ buildbot_worker_group }}"
+    state: present
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+
+- name: create buildbot user
+  user:
+    name: "{{ buildbot_worker_user }}"
+    group: "{{ buildbot_worker_group }}"
+    home: "{{ buildbot_worker_home }}"
+    system: yes
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+    
+- name: install pip and setuptools
+  pip:
+    executable: pip3
+    name:
+      - pip
+      - setuptools
+    state: latest
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+    
+- name: install buildbot-worker
+  pip:
+    name:
+      - buildbot-worker
+    state: latest
+    virtualenv: "{{ buildbot_worker_sandbox }}"
+    virtualenv_python: python3
+  become_user: "{{ buildbot_worker_user }}"
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+
+- name: create buildbot-worker
+  command: "{{ buildbot_worker_sandbox }}/bin/buildbot-worker create-worker {{ buildbot_worker_dir }} {{ buildbot_worker_master }} {{ buildbot_worker_name }} {{ buildbot_worker_password }}"
+  args:
+    creates: "{{ buildbot_worker_dir }}/buildbot.tac"
+  become_user: "{{ buildbot_worker_user }}"
+  notify:
+    - restart buildbot-worker
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+
+- name: configure worker
+  template:
+    src: buildbot.tac.j2
+    dest: "{{ buildbot_worker_dir }}/buildbot.tac"
+  notify:
+    - restart buildbot-worker
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+
+- name: set admin info
+  copy:
+    content: '{{ buildbot_worker_admin }}'
+    dest: "{{ buildbot_worker_dir }}/info/admin"
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+
+- name: set host info
+  copy:
+    content: '{{ buildbot_worker_name }}'
+    dest: "{{ buildbot_worker_dir }}/info/host"
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+
+- name: add systemd unit
+  template:
+    src: buildbot-worker.service.j2
+    dest: /etc/systemd/system/buildbot-worker.service
+  notify:
+    - restart buildbot-worker
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+
+- name: enable and start worker
+  systemd:
+    name: buildbot-worker
+    daemon_reload: yes
+    enabled: yes
+  notify:
+    - restart buildbot-worker
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+    
+- name: permit buildbot port 8010 in firewall
+  firewalld:
+    port: 8010/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  notify:
+    - reload firewalld
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+    
+- name: permit buildbot worker port 9989 in firewall
+  firewalld:
+    port: 9989/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  notify:
+    - reload firewalld
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install

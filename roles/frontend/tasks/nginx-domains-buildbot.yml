@@ -1,0 +1,11 @@
+---
+- name: deploy nginx default.d/{{ inventory_hostname }}-buildbot.conf
+  template:
+    src: nginx-default.d-buildbot.conf.j2
+    dest: "/etc/nginx/default.d/{{ inventory_hostname }}-buildbot.conf"
+  notify:
+   - reload nginx
+  tags:
+    - frontend
+    - nginx
+    - buildbot

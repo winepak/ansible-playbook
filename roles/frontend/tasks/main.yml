@@ -1,0 +1,37 @@
+---
+# Whitelist httpd server on firewall
+- name: permit http services in firewall
+  firewalld:
+    service: http
+    state: enabled
+    permanent: true
+    immediate: true
+  notify:
+   - reload firewalld
+  tags:
+    - frontend
+
+- name: permit https services in firewall
+  firewalld:
+    service: https
+    state: enabled
+    permanent: true
+    immediate: true
+  notify:
+   - reload firewalld
+  tags:
+    - frontend
+
+- name: allow httpd to make network connections
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+  tags:
+    - frontend
+
+# Setup nginx
+- name: setup nginx
+  include: 'nginx.yml'
+  tags:
+    - frontend

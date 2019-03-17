@@ -1,0 +1,27 @@
+---
+- name: upgrade all packages
+  apt:
+    name: '*'
+    state: latest
+  tags:
+   - nginx
+   - certbot
+   - update
+
+- name: install packages
+  apt:
+    name: certbot
+    default_release: stretch-backports
+  when: ansible_distribution_version == '9'
+  tags:
+   - nginx
+   - certbot
+
+- name: install packages
+  apt:
+    name: certbot
+    default_release: jessie-backports
+  when: ansible_distribution_version == '8'
+  tags:
+   - nginx
+   - certbot

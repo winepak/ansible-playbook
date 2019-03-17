@@ -1,0 +1,28 @@
+{
+    "buildbot-title": "{{ buildbot_master_title }}",
+    "buildbot-title-url": "{{ buildbot_master_title_url }}",
+    "buildbot-port": 8010,
+    "buildbot-url": "{{ buildbot_master_url }}",
+    "buildbot-db": "sqlite:///state.sqlite",
+
+    "buildbot-auth-admin": {
+        "username": "{{ buildbot_master_auth_admin_username }}",
+        "password": "{{ buildbot_master_auth_admin_password }}"
+    },
+    
+    "github-api-token": "{{ buildbot_master_github_api_token }}",
+    "github-auth-client": "{{ buildbot_master_github_auth_client }}",
+    "github-auth-secret": "{{ buildbot_master_github_auth_secret }}",
+    "github-change-secret": "{{ buildbot_master_github_change_secret }}",
+    "github-organization-name": "{{ buildbot_master_github_organization_name }}",
+
+    "gitlab-change-secret": "{{ buildbot_master_gitlab_change_secret }}",
+    
+    "repo-dep-repo": "{{ buildbot_master_repo_dep_repo }}"
+    "repo-dep-repo-url": "{{ buildbot_master_repo_dep_repo_url }}"
+    
+    "repo-gpg-homedir": "{{ buildbot_master_repo_gpg_homedir }}",
+    "repo-gpg-key": "{{ buildbot_master_repo_gpg_key }}",
+    
+    "repo-config-file": "{{ buildbot_master_repo_config_file }}"
+}

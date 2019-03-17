@@ -1,0 +1,8 @@
+---
+buildbot_worker_config:
+    arches: '["x86_64", "i386"]'
+    roles: '["sdk", "app"]'
+    update-repo: true
+    max-builds: 4
+
+buildbot_worker_password: SHA256SUM_PASSWORD_YOU_GENERATE

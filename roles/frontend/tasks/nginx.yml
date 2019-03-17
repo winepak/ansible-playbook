@@ -1,0 +1,119 @@
+---
+- name: install packages
+  include: 'nginx-packages-{{ ansible_distribution|lower }}.yml'
+  tags:
+    - frontend
+    - nginx
+
+- name: create cache directory
+  file:
+    path: "{{ nginx_cache_dir }}"
+    state: directory
+    owner: nginx
+    group: nginx
+    setype: _default
+  tags:
+    - frontend
+    - nginx
+
+- name: install nginx.conf
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  notify:
+   - reload nginx
+  tags:
+    - frontend
+    - nginx
+
+- name: install nginx/conf.d/gzip.conf
+  copy:
+    src: nginx-conf.d-gzip.conf
+    dest: /etc/nginx/conf.d/gzip.conf
+  notify:
+   - reload nginx
+  tags:
+    - frontend
+    - nginx
+
+- name: install nginx/mime.types
+  copy:
+    src: nginx-mime.types
+    dest: /etc/nginx/mime.types
+  notify:
+   - reload nginx
+  tags:
+    - frontend
+    - nginx
+
+- name: ensure nginx is running with latest config
+  meta: flush_handlers
+  tags:
+    - frontend
+    - nginx
+
+# Create www directories
+- name: create www directory
+  file:
+    path: /var/www
+    state: directory
+    owner: "{{ nginx_user }}"
+    group: "{{ nginx_group }}"
+    mode: 0775
+  tags:
+    - frontend
+
+# Deploy domains
+- name: setup nginx
+  include: 'nginx-domains-default.yml'
+  when: frontend_domain.make
+  tags:
+    - frontend
+    - nginx
+    - domain
+
+# Sign domains with Let's Encrypt via certbot
+# Setup certbot and get SSL cert
+- name: sign domains with certbot
+  include: 'certbot.yml'
+  when: frontend_domain.sign
+  tags:
+    - frontend
+    - nginx
+    - domain
+    - certbot
+
+# Sign SSL domains
+- name: create Let's Encrypt certificate
+  command: certbot certonly --standalone --noninteractive --email {{ frontend_certbot_email_address }} --agree-tos --cert-name {{ item }} -d {{ item }}
+  become: yes
+  with_items: "{{ frontend_certbot_domains }}"
+  when: frontend_domain_sign
+  run_once: true
+  delegate_to: "{{ nginx_webroot_domain }}"
+  tags:
+    - frontend
+    - nginx
+    - domain
+    - ssl
+    - certbot
+    - letsencrypt
+
+# Deploy SSL domains
+- name: setup nginx
+  include: 'nginx-domains-ssl.yml'
+  when: frontend_domain.sign
+  tags:
+    - frontend
+    - nginx
+    - domain
+    - ssl
+
+# Deploy buildbot domains
+- name: setup nginx
+  include: 'nginx-domains-buildbot.yml'
+  when: frontend_domain.buildbot
+  tags:
+    - frontend
+    - nginx
+    - domain

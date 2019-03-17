@@ -1,0 +1,22 @@
+---
+- name: restart buildbot-master
+  service:
+    name: buildbot-master
+    state: restarted
+
+- name: reconfig buildbot-master
+  service:
+    name: buildbot-master
+    state: reloaded
+
+- name: reload buildbot-master
+  command: "{{ buildbot_master_sandbox }}/bin/buildbot reconfig {{ buildbot_master_dir }}"
+
+- name: checkconfig buildbot-master
+  command: "{{ buildbot_master_sandbox }}/bin/buildbot checkconfig {{ buildbot_master_dir }}"
+
+- name: reload firewalld
+  service:
+    name: firewalld
+    enabled: yes
+    state: reloaded

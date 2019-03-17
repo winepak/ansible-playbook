@@ -1,0 +1,62 @@
+- name: create admin users
+  user:
+    name: "{{ item.username }}"
+    comment: "{{ item.realname }}"
+    groups: "{{ base_admin_group }}"
+  with_items: "{{ base_admin_users }}"
+  tags:
+    - base
+
+- name: add admin ssh keys
+  authorized_key:
+    user: "{{ item.username }}"
+    key: "{{ lookup('file', 'ssh/{{ item.username }}.pub') }}"
+  with_items: "{{ base_admin_users }}"
+  tags:
+    - base
+
+- name: allow passwordless sudo
+  lineinfile:
+    name: /etc/sudoers
+    state: present
+    regexp: '^%{{ base_admin_group }}(\s+)ALL='
+    line: '%{{ base_admin_group }} ALL=(ALL) NOPASSWD: ALL'
+    validate: '/usr/sbin/visudo -cf %s'
+  tags:
+    - base
+  
+- name: install packages
+  include: 'packages-{{ ansible_distribution|lower }}.yml'
+  tags:
+    - base
+
+- name: set timezone to UTC
+  timezone:
+    name: UTC
+  tags:
+    - base
+
+- name: enable time service
+  service:
+    name: "{{ base_time_service_unit }}"
+    state: started
+    enabled: yes
+  tags:
+    - base
+
+- name: enable fail2ban service
+  service:
+    name: fail2ban
+    state: started
+    enabled: yes
+  tags:
+    - base
+
+- name: install fail2ban/jail.local
+  copy:
+    src: fail2ban-jail.local
+    dest: /etc/fail2ban/jail.local
+  notify:
+    - reload fail2ban
+  tags:
+    - base

@@ -1,0 +1,156 @@
+---
+- name: install packages
+  include: 'packages-{{ ansible_distribution|lower }}.yml'
+  tags:
+    - buildbot
+
+- name: create buildbot group
+  group:
+    name: "{{ buildbot_master_group }}"
+    state: present
+  tags:
+    - buildbot
+    - buildbot-master
+
+- name: create buildbot user
+  user:
+    name: "{{ buildbot_master_user }}"
+    group: "{{ buildbot_master_group }}"
+    home: "{{ buildbot_master_home }}"
+    system: yes
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+    
+- name: install pip and setuptools
+  pip:
+    executable: pip3
+    name:
+      - pip
+      - setuptools
+    state: latest
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+    
+- name: install buildbot dependencies
+  pip:
+    name:
+      - pyopenssl
+      - jrnl
+      - uritemplate
+      - requests
+    state: latest
+    virtualenv: "{{ buildbot_master_sandbox }}"
+    virtualenv_python: python3
+  become_user: "{{ buildbot_master_user }}"
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+    
+- name: install buildbot
+  pip:
+    name:
+      - buildbot[tls]
+      - buildbot-worker
+      - buildbot-www
+      - buildbot-waterfall-view
+      - buildbot-console-view
+      - buildbot-grid-view
+    state: latest
+    virtualenv: "{{ buildbot_master_sandbox }}"
+    virtualenv_python: python3
+  become_user: "{{ buildbot_master_user }}"
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+
+- name: create buildbot-master
+  command: "{{ buildbot_master_sandbox }}/bin/buildbot create-master {{ buildbot_master_dir }}"
+  become_user: "{{ buildbot_master_user }}"
+  notify:
+    - restart buildbot-master
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+
+- name: add systemd unit
+  template:
+    src: buildbot-master.service.j2
+    dest: /etc/systemd/system/buildbot-master.service
+  notify:
+    - restart buildbot-master
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+
+- name: update buildbot config.json
+  template:
+    src: config.json.j2
+    dest: "{{ buildbot_master_dir }}/config.json"
+    owner: "{{ buildbot_master_user }}"
+    group: "{{ buildbot_master_group }}"
+  notify:
+    - reconfig buildbot-master
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+
+- name: update buildbot workers.json
+  template:
+    src: workers.json.j2
+    dest: "{{ buildbot_master_dir }}/workers.json"
+    owner: "{{ buildbot_master_user }}"
+    group: "{{ buildbot_master_group }}"
+  notify:
+    - restart buildbot-master
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+
+- name: enable and start buildbot
+  systemd:
+    name: buildbot-master
+    daemon_reload: yes
+    enabled: yes
+    state: started
+  notify:
+    - restart buildbot-master
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+    
+- name: permit buildbot port 8010 in firewall
+  firewalld:
+    port: 8010/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  notify:
+    - reload firewalld
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+    
+- name: permit buildbot worker port 9989 in firewall
+  firewalld:
+    port: 9989/tcp
+    state: enabled
+    permanent: true
+    immediate: true
+  notify:
+    - reload firewalld
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install

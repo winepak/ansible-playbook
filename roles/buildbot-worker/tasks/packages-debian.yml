@@ -1,0 +1,25 @@
+---
+- name: upgrade all packages
+  apt:
+    name: '*'
+    state: latest
+  tags:
+   - buildbot-worker
+   - update
+
+- name: install packages
+  package:
+    name: "{{ item }}"
+  with_items:
+    - git
+    - python-pip
+    - pythoin-dev
+    - build-essential
+    - ostree
+    - virtualenv
+    - build-essential
+    - elfutils
+    - flatpak-builder
+    - appstream-util
+  tags:
+  - buildbot-worker

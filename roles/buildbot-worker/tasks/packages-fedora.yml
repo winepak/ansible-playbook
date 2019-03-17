@@ -1,0 +1,25 @@
+---
+- name: upgrade all packages
+  dnf:
+    name: '*'
+    state: latest
+  tags:
+   - buildbot-worker
+   - update
+
+- name: install packages
+  package:
+    name: "{{ item }}"
+  with_items:
+    - git
+    - python3-pip
+    - python2-pip
+    - python3-virtualenv
+    - python2-virtualenv
+    - ostree
+    - '@development-tools'
+    - elfutils
+    - flatpak-builder
+    - appstream
+  tags:
+   - buildbot-worker

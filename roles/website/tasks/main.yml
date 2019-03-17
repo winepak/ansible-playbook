@@ -1,0 +1,7 @@
+---
+- name: copy website from git repo
+  git:
+    repo: "{{ website.source }}"
+    dest: "{{ website.destination }}"
+  tags:
+    - website

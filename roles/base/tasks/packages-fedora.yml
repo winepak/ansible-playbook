@@ -1,0 +1,35 @@
+- name: upgrade all packages
+  dnf:
+    name: '*'
+    state: latest
+  tags:
+    - base
+    - update
+
+- name: install packages
+  package:
+    name: "{{ item }}"
+  with_items:
+    - htop
+    - iftop
+    - iotop
+    - lsof
+    - chrony
+    - sed
+    - grep
+    - vi
+    - vim
+    - curl
+    - bind-utils
+    - fail2ban-firewalld
+    - fail2ban-server
+    - fail2ban-systemd
+    - python3-libsemanage
+    - python2-libsemanage
+    - python3-policycoreutils
+    - python2-policycoreutils
+    - nmap-ncat
+    - net-tools
+    - git
+  tags:
+    - base

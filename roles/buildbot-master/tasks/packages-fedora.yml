@@ -1,0 +1,26 @@
+---
+- name: upgrade all packages
+  dnf:
+    name: '*'
+    state: latest
+  tags:
+   - buildbot
+   - update
+
+- name: install packages
+  package:
+    name: "{{ item }}"
+  with_items:
+    - git
+    - python3-pip
+    - python2-pip
+    - python3-virtualenv
+    - python2-virtualenv
+    - ostree
+    - '@development-tools'
+    - python3-devel
+    - python2-devel
+    - openssl-devel
+    - libffi-devel
+  tags:
+   - buildbot
