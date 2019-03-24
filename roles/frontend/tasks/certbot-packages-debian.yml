@@ -4,9 +4,9 @@
     name: '*'
     state: latest
   tags:
-   - nginx
-   - certbot
-   - update
+    - nginx
+    - certbot
+    - update
 
 - name: install packages
   apt:
@@ -14,8 +14,9 @@
     default_release: stretch-backports
   when: ansible_distribution_version == '9'
   tags:
-   - nginx
-   - certbot
+    - nginx
+    - certbot
+    - install
 
 - name: install packages
   apt:
@@ -23,5 +24,6 @@
     default_release: jessie-backports
   when: ansible_distribution_version == '8'
   tags:
-   - nginx
-   - certbot
+    - nginx
+    - certbot
+    - install

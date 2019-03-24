@@ -4,8 +4,8 @@
     name: '*'
     state: latest
   tags:
-   - buildbot
-   - update
+    - buildbot
+    - update
 
 - name: install packages
   package:
@@ -20,4 +20,5 @@
     - libssl-dev
     - libffi-dev
   tags:
-  - buildbot
+    - buildbot
+    - install

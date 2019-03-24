@@ -4,9 +4,9 @@
     name: '*'
     state: latest
   tags:
-   - nginx
-   - certbot
-   - update
+    - nginx
+    - certbot
+    - update
 
 - name: install packages
   package:
@@ -14,5 +14,6 @@
   with_items:
     - certbot-nginx
   tags:
-   - nginx
-   - certbot
+    - nginx
+    - certbot
+    - install
