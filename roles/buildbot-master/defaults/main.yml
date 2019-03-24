@@ -29,4 +29,6 @@ buildbot_master_repo_gpg_file_name: "repo.gpg"
 buildbot_master_repo_gpg_file_source: ""
 buildbot_master_repo_gpg_file_source_sha256sum: ""
 
+buildbot_master_repo_upstream_repo: ""
+
 buildbot_master_repo_config_file: "config.json"

@@ -19,4 +19,6 @@ buildbot_master_repo_gpg_file_name: "winepak.gpg"
 buildbot_master_repo_gpg_file_source: "https://dl.winepak.org/repo/winepak.gpg"
 buildbot_master_repo_gpg_file_source_sha256sum: "aa8cbf8b1fc7d53a249c7b5c53de049e6544acafe8ea37aba1e2df5dce7ec2bd"
 
+buildbot_master_repo_upstream_repo: "https://dl.winepak.org/repo/"
+
 buildbot_master_repo_config_file: "winepak.json"
