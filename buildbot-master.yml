@@ -1,6 +1,6 @@
 ---
 - name: setup buildbot master
-  hosts: buildbot
+  hosts: buildbot-master
   become: true
   roles:
     - buildbot-master
