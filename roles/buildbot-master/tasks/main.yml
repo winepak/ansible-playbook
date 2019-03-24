@@ -90,6 +90,20 @@
     - buildbot-master
     - buildbot-install
 
+- name: install GPG file
+  get_url:
+    url: "{{ buildbot_master_repo_gpg_file_source }}"
+    checksum: "sha256:{{ buildbot_master_repo_gpg_file_source_sha256sum }}"
+    dest: "{{ buildbot_master_dir }}/{{ buildbot_master_repo_gpg_file_name }}"
+    owner: "{{ buildbot_master_user }}"
+    group: "{{ buildbot_master_group }}"
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-update
+    - buildbot-config
+    - gpg
+
 - name: update buildbot config.json
   template:
     src: config.json.j2
@@ -101,7 +115,8 @@
   tags:
     - buildbot
     - buildbot-master
-    - buildbot-install
+    - buildbot-update
+    - buildbot-config
 
 - name: update buildbot workers.json
   template:
@@ -114,7 +129,8 @@
   tags:
     - buildbot
     - buildbot-master
-    - buildbot-install
+    - buildbot-update
+    - buildbot-config
 
 - name: enable and start buildbot
   systemd:

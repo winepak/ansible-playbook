@@ -1,5 +1,5 @@
 {
-{% for host in groups['buildbot-workers'] %}
+{% for host in groups['buildbot-worker'] %}
   "{{ hostvars[host]["inventory_hostname_short"] }}": {
   {% for key, value in hostvars[host]["buildbot_worker_config"].items() %}
     "{{ key }}": {{ value }},
@@ -8,4 +8,5 @@
   }{% if not loop.last %},
 {% endif %}
 {% endfor %}
+
 }
