@@ -19,6 +19,7 @@
     - virtualenv
     - build-essential
     - elfutils
+    - flatpak
     - flatpak-builder
     - appstream-util
     - rsync
