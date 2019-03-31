@@ -21,6 +21,7 @@
     - elfutils
     - flatpak-builder
     - appstream-util
+    - rsync
   tags:
     - buildbot-worker
     - install

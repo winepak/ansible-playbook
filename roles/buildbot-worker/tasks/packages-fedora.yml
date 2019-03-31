@@ -19,8 +19,10 @@
     - ostree
     - '@development-tools'
     - elfutils
+    - flatpak
     - flatpak-builder
     - appstream
+    - rsync
   tags:
     - buildbot-worker
     - install
