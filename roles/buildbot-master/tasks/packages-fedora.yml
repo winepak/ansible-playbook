@@ -25,6 +25,7 @@
     - flatpak
     - flatpak-builder
     - appstream
+    - rsync
   tags:
     - buildbot
     - install
