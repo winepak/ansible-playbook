@@ -22,6 +22,9 @@
     - python2-devel
     - openssl-devel
     - libffi-devel
+    - flatpak
+    - flatpak-builder
+    - appstream
   tags:
     - buildbot
     - install

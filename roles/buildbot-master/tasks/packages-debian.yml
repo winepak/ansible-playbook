@@ -19,6 +19,9 @@
     - virtualenv
     - libssl-dev
     - libffi-dev
+    - flatpak
+    - flatpak-builder
+    - appstream-util
   tags:
     - buildbot
     - install
