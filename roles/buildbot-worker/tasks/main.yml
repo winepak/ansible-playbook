@@ -37,6 +37,16 @@
     - buildbot-worker
     - buildbot-install
     
+- name: upgrade pip
+  pip: 
+    executable: pip3
+    name: pip
+    extra_args: "--upgrade"
+  tags:
+    - buildbot
+    - buildbot-worker
+    - buildbot-install
+    
 - name: install buildbot-worker
   pip:
     name:

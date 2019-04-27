@@ -1,0 +1,10 @@
+---    
+repo_path: "/srv/repo/"
+repo_url: "{{ project_uri_download }}repo/"
+repo_gpg: "{{ project_name }}.gpg"
+
+repo_name: "{{ project_name_capitalization }}"
+repo_homepage: "{{ project_uri_homepage }}"
+repo_comment: "Flatpak-ing Microsoft Windows applications with Wine"
+repo_description: "Flatpak-ing Microsoft Windows applications with Wine"
+repo_icon: "{{ project_name }}.svg"

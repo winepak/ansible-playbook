@@ -5,7 +5,7 @@
 # - dl.winepak.org
 # - buildbot.winepak.org
 # - etc..
-frontend_webroot_domain: cyberia.party
+frontend_webroot_domain: "{{ project_domain }}"
 
 # Should the frontend make domain configuration by default?
 frontend_domain_make: true
@@ -14,4 +14,4 @@ frontend_domain_make: true
 frontend_domain_sign: true
 
 # Certbot email address to sign domains
-frontend_certbot_email_address: julian@richen.io
+frontend_certbot_email_address: "julian@richen.io"

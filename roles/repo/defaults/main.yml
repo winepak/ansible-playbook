@@ -1,0 +1,11 @@
+---
+repo_path: "/srv/repo/"
+repo_url: "https://dl.domain.tld/repo/"
+repo_gpg: "repo.gpg"
+
+repo_name: "repo"
+repo_homepage: ""
+repo_comment: "A Flatpak repo"
+repo_description: "{{ repo_comment }}"
+repo_icon: "repo.svg"
+repo_icon_uri: "{{ repo_url }}{{ repo_icon }}"

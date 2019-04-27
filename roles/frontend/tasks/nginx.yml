@@ -66,7 +66,7 @@
 # Deploy domains
 - name: setup nginx
   include: 'nginx-domains-default.yml'
-  when: frontend_domain.make
+  when: frontend_domain_make
   tags:
     - frontend
     - nginx
@@ -76,7 +76,7 @@
 # Setup certbot and get SSL cert
 - name: sign domains with certbot
   include: 'certbot.yml'
-  when: frontend_domain.sign
+  when: frontend_domain_sign
   tags:
     - frontend
     - nginx
@@ -102,7 +102,7 @@
 # Deploy SSL domains
 - name: setup nginx
   include: 'nginx-domains-ssl.yml'
-  when: frontend_domain.sign
+  when: frontend_domain_sign
   tags:
     - frontend
     - nginx
@@ -112,7 +112,7 @@
 # Deploy buildbot domains
 - name: setup nginx
   include: 'nginx-domains-buildbot.yml'
-  when: frontend_domain.buildbot
+  when: frontend_domain_buildbot
   tags:
     - frontend
     - nginx

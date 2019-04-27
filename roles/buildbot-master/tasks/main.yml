@@ -35,6 +35,16 @@
     - buildbot-master
     - buildbot-install
     
+- name: upgrade pip
+  pip: 
+    executable: pip3
+    name: pip
+    extra_args: "--upgrade"
+  tags:
+    - buildbot
+    - buildbot-master
+    - buildbot-install
+    
 - name: install buildbot dependencies
   pip:
     name:
@@ -90,10 +100,9 @@
     - buildbot-master
     - buildbot-install
 
-- name: install GPG file
-  get_url:
-    url: "{{ buildbot_master_repo_gpg_file_source }}"
-    checksum: "sha256:{{ buildbot_master_repo_gpg_file_source_sha256sum }}"
+- name: deploy gpg file
+  copy:
+    src: repo.gpg
     dest: "{{ buildbot_master_dir }}/{{ buildbot_master_repo_gpg_file_name }}"
     owner: "{{ buildbot_master_user }}"
     group: "{{ buildbot_master_group }}"

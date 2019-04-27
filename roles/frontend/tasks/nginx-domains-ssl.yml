@@ -1,8 +1,8 @@
 ---
-- name: deploy nginx conf.d/{{ inventory_hostname }}-ssl.conf
+- name: deploy nginx conf.d/*-ssl.conf
   template:
     src: nginx-conf.d-ssl.conf.j2
-    dest: "/etc/nginx/conf.d/{{ inventory_hostname }}-ssl.conf"
+    dest: "/etc/nginx/conf.d/{{ frontend_domain_name }}-ssl.conf"
   notify:
    - reload nginx
   tags:

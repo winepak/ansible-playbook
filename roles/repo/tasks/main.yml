@@ -1,0 +1,54 @@
+---
+- name: create repo directory
+  file:
+    path: "{{ repo_path }}"
+    state: directory
+  tags:
+    - download
+    - repo
+    
+- name: ostree init archive repo
+  command: ostree --repo={{ repo_path }} init --mode=archive
+  tags:
+    - download
+    - repo
+
+- name: deploy repo icon
+  copy:
+    src: repo.svg
+    dest: "{{ repo_path }}{{ repo_icon }}"
+  tags:
+    - download
+    - repo
+
+- name: deploy gpg file
+  copy:
+    src: repo.gpg
+    dest: "{{ repo_path }}{{ repo_gpg }}"
+  tags:
+    - download
+    - repo
+    - gpg
+
+- name: generate base64 gpg key from repo.gpg
+  shell: base64 {{ repo_path }}{{ repo_gpg }} | tr -d '\n'
+  register: repo_gpg_key_command
+  tags:
+    - download
+    - repo
+    - gpg
+
+- set_fact: 
+    repo_gpg_key: "{{ repo_gpg_key_command.stdout }}"
+  tags:
+    - download
+    - repo
+    - gpg
+
+- name: deploy flatpakrepo file
+  template:
+    src: repo.flatpakrepo.j2
+    dest: "{{ repo_path }}{{ repo_name }}.flatpakrepo"
+  tags:
+    - download
+    - repo

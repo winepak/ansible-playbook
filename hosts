@@ -1,16 +1,19 @@
 [frontend]
-winepak.org
-dl.winepak.org
-build.winepak.org buildbot=true
+cyberia.party
+dl.cyberia.party
+build.cyberia.party
+
+[repo]
+dl.cyberia.party
 
 [website]
-winepak.org source=https://github.com/winepak/winepak.github.io.git
+cyberia.party source=https://github.com/winepak/winepak.github.io.git
 
 [buildbot-master]
-build.winepak.org # config=https://github.com/winepak/buildbot-config.git
+build.cyberia.party # config=https://github.com/winepak/buildbot-config.git
 
 [buildbot-worker]
-worker-x86-1.winepak.org
+worker-x86-1.cyberia.party
 
 # [linux-store-frontend]
-# apps.winepak.org
+# apps.cyberia.party

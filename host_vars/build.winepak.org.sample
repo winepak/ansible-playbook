@@ -1,7 +1,9 @@
 ---
-buildbot_master_title: "winepak buildbot"
-buildbot_master_title_url: "https://build.winepak.org"
-buildbot_master_url: "https://build.winepak.org/"
+buildbot: true
+
+buildbot_master_title: "{{ project_name_capitalization }} buildbot"
+buildbot_master_title_url: "{{ project_uri_buildbot }}"
+buildbot_master_url: "{{ project_uri_buildbot }}"
 
 buildbot_master_auth_admin_username: "admin"
 buildbot_master_auth_admin_password: "SHA256SUM_PASSWORD_YOU_GENERATE"
@@ -9,16 +11,16 @@ buildbot_master_auth_admin_password: "SHA256SUM_PASSWORD_YOU_GENERATE"
 buildbot_master_github_auth_client: "SHA256SUM_PASSWORD_YOU_GENERATE"
 buildbot_master_github_auth_secret: "SHA256SUM_PASSWORD_YOU_GENERATE"
 buildbot_master_github_change_secret: "SHA256SUM_PASSWORD_YOU_GENERATE"
-buildbot_master_github_organization_name: "winepak"
+buildbot_master_github_organization_name: "{{ project_name }}"
 
-buildbot_master_repo_dep_repo: "winepak"
-buildbot_master_repo_dep_repo_url: "https://dl.winepak.org/repo/winepak.flatpakrepo"
+buildbot_master_repo_dep_repo: "{{ project_name }}"
+buildbot_master_repo_dep_repo_url: "{{ project_uri_download }}repo/{{ project_name }}.flatpakrepo"
 
 buildbot_master_repo_gpg_key: ""
-buildbot_master_repo_gpg_file_name: "winepak.gpg"
-buildbot_master_repo_gpg_file_source: "https://dl.winepak.org/repo/winepak.gpg"
+buildbot_master_repo_gpg_file_name: "{{ project_name }}.gpg"
+buildbot_master_repo_gpg_file_source: "{{ project_uri_download }}repo/{{ project_name }}.gpg"
 buildbot_master_repo_gpg_file_source_sha256sum: "aa8cbf8b1fc7d53a249c7b5c53de049e6544acafe8ea37aba1e2df5dce7ec2bd"
 
-buildbot_master_repo_upstream_repo: "https://dl.winepak.org/repo/"
+buildbot_master_repo_upstream_repo: "{{ project_uri_download }}repo/"
 
-buildbot_master_repo_config_file: "winepak.json"
+buildbot_master_repo_config_file: "{{ project_name }}.json"

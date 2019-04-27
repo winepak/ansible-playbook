@@ -2,3 +2,20 @@
 ansible_python_interpreter: /usr/bin/python3
 
 ansible_become: yes
+
+# lowercase no spaces
+project_name: "cyberia"
+
+# The way the project is spelled with capitalization and spaces
+project_name_capitalization: "{{ project_name }}"
+
+# Project domain without http(s) or a trailing slash
+project_domain: "cyberia.party"
+project_domain_download: "dl.{{ project_domain }}"
+project_domain_buildbot: "build.{{ project_domain }}"
+
+# Project URIs, include a slash at the end!
+project_uri_homepage: "https://{{ project_domain }}/"
+project_uri_download: "https://{{ project_domain_download }}/"
+project_uri_buildbot: "https://{{ project_domain_buildbot }}/"
+

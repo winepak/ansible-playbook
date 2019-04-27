@@ -1,8 +1,8 @@
 ---
-- name: deploy nginx conf.d/{{ inventory_hostname }}-default.conf
+- name: "deploy nginx conf.d/*-default.conf"
   template:
     src: nginx-conf.d-default.conf.j2
-    dest: "/etc/nginx/conf.d/{{ inventory_hostname }}-default.conf"
+    dest: "/etc/nginx/conf.d/{{ frontend_domain_name }}-default.conf"
   notify:
     - reload nginx
   tags:
@@ -10,9 +10,9 @@
     - nginx
     - domain
 
-- name: create www directory for {{ inventory_hostname }}
+- name: "create www directory for {{ frontend_domain_name }}"
   file:
-    path: /var/www/{{ inventory_hostname }}
+    path: /var/www/{{ frontend_domain_name }}
     state: directory
     owner: "{{ nginx_user }}"
     group: "{{ nginx_group }}"

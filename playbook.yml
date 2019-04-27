@@ -11,6 +11,12 @@
   roles:
     - frontend
 
+- name: setup repo
+  hosts: repo
+  become: true
+  roles:
+    - repo
+
 - name: setup website
   hosts: website
   become: true

@@ -1,16 +1,16 @@
 # {{ ansible_managed }}
 
 server {
-    listen      80{% if frontend_domain.name == nginx_webroot_domain %} default_server{% endif %};
-    listen      [::]:80{% if frontend_domain.name == nginx_webroot_domain %} default_server{% endif %};
-    server_name {{ frontend_domain.name }} www.{{ frontend_domain.name }};
-    root        {{ frontend_domain.path }};
+    listen      80{% if frontend_domain_name == nginx_webroot_domain %} default_server{% endif %};
+    listen      [::]:80{% if frontend_domain_name == nginx_webroot_domain %} default_server{% endif %};
+    server_name {{ frontend_domain_name }} www.{{ frontend_domain_name }};
+    root        {{ frontend_domain_path }};
 
     location ~ /\.git {
         deny all;
     }
 
     # Load configuration files for the default server block.
-    include /etc/nginx/default.d/{{ frontend_domain.name }}-*.conf;
+    include /etc/nginx/default.d/{{ frontend_domain_name }}-*.conf;
 
 }

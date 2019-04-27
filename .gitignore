@@ -2,3 +2,5 @@ host_vars/build.cyberia.party
 host_vars/worker-x86-1.cyberia.party
 host_vars/build.winepak.org
 host_vars/worker-x86-1.winepak.org
+*.retry
+hosts
