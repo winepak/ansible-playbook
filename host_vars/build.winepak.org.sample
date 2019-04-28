@@ -11,7 +11,7 @@ buildbot_master_auth_admin_password: "SHA256SUM_PASSWORD_YOU_GENERATE"
 buildbot_master_github_auth_client: "SHA256SUM_PASSWORD_YOU_GENERATE"
 buildbot_master_github_auth_secret: "SHA256SUM_PASSWORD_YOU_GENERATE"
 buildbot_master_github_change_secret: "SHA256SUM_PASSWORD_YOU_GENERATE"
-buildbot_master_github_organization_name: "{{ project_name }}"
+buildbot_master_github_organization_name: "winepak"
 
 buildbot_master_repo_dep_repo: "{{ project_name }}"
 buildbot_master_repo_dep_repo_url: "{{ project_uri_download }}repo/{{ project_name }}.flatpakrepo"
